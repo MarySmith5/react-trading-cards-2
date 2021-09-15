@@ -60,9 +60,25 @@ function TradingCard(props) {
 }
 
 function TradingCardContainer() {
-  const tradingCards = [];
 
-  for (const currentCard of tradingCardData) {
+  // const floatCard = {
+  //   name: 'Float',
+  //   skill: 'baking pretzels',
+  //   imgUrl: '/static/img/float.jpg'
+  // };
+
+  const [cards, setCards] = React.useState([]);
+  
+  React.useEffect(() => {
+    fetch('/cards.json')
+    .then((response) => response.json())
+    .then((data) => setCards(data.cards))
+  }, [])
+
+
+  const tradingCards = [];
+  // tradingCardData
+  for (const currentCard of cards) {
     tradingCards.push(
       <TradingCard
         key={currentCard.cardId}
@@ -73,7 +89,13 @@ function TradingCardContainer() {
     );
   }
 
+
   return <div className="grid">{tradingCards}</div>;
 }
 
 ReactDOM.render(<TradingCardContainer />, document.getElementById("container"));
+
+// Use the .fetch wherever the use effect is. where we need a side effect
+// Use effect: 2 arg (action (fetch), empty array (on first render)) -- 
+// reason to do serverside: to store and not just keep it in frontend. Practice to grab data from database, ability to pull from changed database
+// 

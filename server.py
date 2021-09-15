@@ -71,7 +71,7 @@ def show_cards():
 @app.route("/cards.json")
 def get_cards_json():
     """Return a JSON response with all cards."""
-
+    
     return jsonify({"cards": CARD_DATA})
 
 
